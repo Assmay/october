@@ -587,6 +587,11 @@ class Controller
     protected function initTwigEnvironment()
     {
         $this->loader = new TwigLoader;
+        \Event::listen('cms.twig.loader', function ($loader) {
+            if ($loader instanceof TwigLoader) {
+                $this->loader = $loader;
+            }
+        });
 
         $useCache = !Config::get('cms.twigNoCache');
         $isDebugMode = Config::get('app.debug', false);
